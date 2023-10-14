@@ -8,7 +8,7 @@ import {
   SiPython,
 } from "react-icons/si";
 import { FcFolder, FcOpenedFolder, FcPicture, FcFile } from "react-icons/fc";
-import { AiFillEdit, AiFillEnvironment, AiFillFileText, AiFillSetting } from "react-icons/ai";
+import { AiFillFileText, AiFillSetting } from "react-icons/ai";
 
 function getIconHelper() {
   const cache = new Map<string, ReactNode>();

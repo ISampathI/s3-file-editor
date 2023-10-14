@@ -47,8 +47,15 @@
     }
   }
 
+  .loading-spin {
+    svg {
+      fill: $primary-color;
+      width: 1.3rem;
+    }
+  }
+
   .save-btn {
-    margin-left: auto;
+    margin-left: 10px;
     color: $primary-color;
     font-size: 1.3rem;
   }

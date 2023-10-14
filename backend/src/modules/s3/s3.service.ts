@@ -17,16 +17,10 @@ export class S3Service {
     });
   }
 
-  getHello(): any {
-    return {
-      message: 'Hello World!',
-    };
-  }
-
-  async getFileData(key: string): Promise<any> {
+  async getFileData(key: string, bucket: string): Promise<any> {
     const file = await this.s3
       .getObject({
-        Bucket: process.env.AWS_BUCKET_NAME,
+        Bucket: bucket,
         Key: key,
       })
       .promise();
@@ -34,10 +28,10 @@ export class S3Service {
     return JSON.stringify(file.Body.toString());
   }
 
-  async updateFile(key: string, content: string): Promise<any> {
+  async updateFile(key: string, content: string, bucket: string): Promise<any> {
     await this.s3
       .putObject({
-        Bucket: process.env.AWS_BUCKET_NAME,
+        Bucket: bucket,
         Key: key,
         Body: content,
       })
@@ -48,16 +42,24 @@ export class S3Service {
     };
   }
 
-  async listObjects(): Promise<any> {
+  async listObjects(bucket: string): Promise<any> {
     const files = await this.s3
       .listObjectsV2({
-        Bucket: process.env.AWS_BUCKET_NAME,
+        Bucket: bucket,
       })
       .promise();
 
     let folderTree: any = convertToTree(files);
 
-    return [...folderTree.subfolders, ...folderTree.files];
+    return {
+      bucket: bucket,
+      objectList: [...folderTree.subfolders, ...folderTree.files],
+    };
+  }
+
+  async bucketList(): Promise<any> {
+    const buckets = await this.s3.listBuckets().promise();
+    return buckets.Buckets.map((bucket) => bucket.Name);
   }
 }
 

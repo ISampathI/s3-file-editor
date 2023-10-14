@@ -6,6 +6,50 @@
   color: $accent-color-light;
   font-size: 0.85rem;
   padding-left: 5px;
+  position: relative;
+
+  .bucket {
+    width: 100%;
+    padding-left: 7px;
+    padding-bottom: 8px;
+    padding-top: 10px;
+    background-color: $sub-background-color;
+    box-shadow: rgb(0, 0, 0) 0px 8px 4px -7px;
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+
+    .select-bucket {
+      width: 270px;
+      display: flex;
+      align-items: center;
+      padding-top: 2px;
+
+      .ant-select-selector {
+        border: 0;
+        width: 100%;
+        background-color: $sub-background-color;
+        cursor: pointer;
+        color: white;
+        font-size: 0.8rem;
+
+        .ant-select-selection-placeholder {
+          color: $accent-color;
+        }
+      }
+      .ant-select-arrow{
+        display: none;
+        svg{
+          fill: $accent-color;
+        }   
+      }
+    }
+
+    i {
+      color: $text-color-2;
+    }
+  }
 
   .file-icon {
     display: flex;
@@ -44,5 +88,22 @@
     i {
       color: $primary-color;
     }
+  }
+}
+
+.ant-select-dropdown {
+  background-color: $sub-background-color;
+  border-radius: 2px;
+  border: 1px solid $sub-background-color-lighter;
+
+  .ant-select-item-option-content {
+    color: white;
+  }
+  .ant-select-item-option-selected{
+    background-color: $sub-background-color-lighter !important;
+  }
+
+  .rc-virtual-list-scrollbar-thumb{
+    background-color: $sub-background-color-lighter !important;
   }
 }

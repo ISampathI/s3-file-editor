@@ -1,29 +1,49 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./styles.scss";
 import { getIcon } from "../../utils/Icon";
-import { getS3Tree } from "../../services/api";
+import { getS3BucketList, getS3Tree } from "../../services/api";
 import { FileObj, FolderObj } from "../../types/interfaces";
-import { SelectedFileContext } from "../../contexts/Context";
+import {
+  SelectedBucketContext,
+  SelectedFileContext,
+} from "../../contexts/Context";
+import { Select } from "antd";
 
 interface FolderTreeProps {
   onFileSelect: (file: FileObj) => void;
 }
 
 const FolderTree: React.FC<FolderTreeProps> = ({ onFileSelect }) => {
-  const [expandedFolders, setExpandedFolders] = useState<string[]>([]);
+  const selectedBucketContext = useContext(SelectedBucketContext);
   const selectedFileContext = useContext(SelectedFileContext);
+
+  const [expandedFolders, setExpandedFolders] = useState<string[]>([]);
   const [tree, setTree] = useState<FolderObj[]>([]);
+  const [bucketList, setBucketList] = useState<any>([]);
+
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await getS3Tree();
-      if (data) {
-        setTree(data);
-      } else {
-        setTree([]);
-      }
-    };
-    fetchData();
+    fetchBucketList();
   }, []);
+
+  const fetchBucketList = async () => {
+    const data = await getS3BucketList();
+    if (data) {
+      const bucketList = data.map((bucket: string) => {
+        return { value: bucket, label: bucket };
+      });
+      setBucketList(bucketList);
+    } else {
+      setBucketList([]);
+    }
+  };
+  const fetchBucketData = async (bucket: string) => {
+    const data = await getS3Tree(bucket);
+    if (data) {
+      setTree(data.objectList);
+    } else {
+      setTree([]);
+    }
+  };
 
   const toggleFolder = (folderId: string) => {
     setExpandedFolders((prevState) =>
@@ -42,7 +62,9 @@ const FolderTree: React.FC<FolderTreeProps> = ({ onFileSelect }) => {
             selectedFileContext?.setSelectedFile(file);
             onFileSelect(file);
           }}
-          className={`file ${selectedFileContext?.selectedFile?.key === file.key && "active"}`}
+          className={`file ${
+            selectedFileContext?.selectedFile?.key === file.key && "active"
+          }`}
           key={file.key}
           style={{
             paddingLeft: `${folder ? folder.level * 20 + 20 : 0}px`,
@@ -109,7 +131,26 @@ const FolderTree: React.FC<FolderTreeProps> = ({ onFileSelect }) => {
     return <span className="file-icon">{icon}</span>;
   };
 
-  return <div className="FolderTree">{renderFolders(tree)}</div>;
+  const onChange = (value: string) => {
+    selectedBucketContext?.setSelectedBucket(value);
+    fetchBucketData(value);
+  };
+
+  return (
+    <div className="FolderTree">
+      <div className="bucket">
+        <i className="fa-solid fa-bucket"></i>
+        <Select
+          className="select-bucket"
+          showSearch
+          placeholder="Select a Bucket"
+          onChange={onChange}
+          options={bucketList}
+        />
+      </div>
+      {renderFolders(tree)}
+    </div>
+  );
 };
 
 export default FolderTree;

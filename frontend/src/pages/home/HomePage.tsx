@@ -5,28 +5,64 @@ import { Editor } from "@monaco-editor/react";
 import { getS3File, updateS3File } from "../../services/api";
 import { getLanguageFromFilename } from "../../utils/editor";
 import PageHeader from "../../components/header/PageHeader";
-import { SelectedFileContext } from "../../contexts/Context";
+import {
+  SelectedBucketContext,
+  SelectedFileContext,
+} from "../../contexts/Context";
 
 export default function HomePage() {
-  const [fileData, setFileData] = React.useState<string>("");
-  const [language, setLanguage] = React.useState<string>("javascript");
-  const [loading, setLoading] = React.useState<boolean>(false);
-
+  const selectedBucketContext = React.useContext(SelectedBucketContext);
   const selectedFileContext = React.useContext(SelectedFileContext);
 
+  const [fileData, setFileData] = React.useState<string>("");
+  const [editorData, setEditorData] = React.useState<string>("");
+  const [language, setLanguage] = React.useState<string>("javascript");
+  const [loading, setLoading] = React.useState<boolean>(false);
+  const [isFileChanged, setIsFileChanged] = React.useState<boolean>(false);
+
   const handleFileClick = async (file: any) => {
+    if (!file || !selectedBucketContext?.selectedBucket) return;
     setLoading(true);
-    const data = await getS3File(file.key);
+    setEditorData("");
+    setFileData("");
+    const data = await getS3File(
+      file.key,
+      selectedBucketContext?.selectedBucket
+    );
     setLanguage(getLanguageFromFilename(file.key));
     setFileData(data);
+    setEditorData(data);
     setLoading(false);
+    setIsFileChanged(false);
   };
 
   const handleFileSave = async () => {
-    if (selectedFileContext?.selectedFile) {
-      setLoading(true);
-      await updateS3File(selectedFileContext?.selectedFile.key, fileData);
-      setLoading(false);
+    if (
+      selectedFileContext?.selectedFile &&
+      selectedBucketContext?.selectedBucket
+    ) {
+      if (editorData !== fileData) {
+        setLoading(true);
+        const res = await updateS3File(
+          selectedFileContext?.selectedFile.key,
+          editorData,
+          selectedBucketContext?.selectedBucket
+        );
+        if (res?.status === 201) {
+          setFileData(editorData);
+          setIsFileChanged(false);
+        }
+        setLoading(false);
+      }
+    }
+  };
+
+  const handleEditorChange = (value: string | undefined) => {
+    if (value !== fileData) {
+      setIsFileChanged(true);
+      setEditorData(value ?? "");
+    } else {
+      setIsFileChanged(false);
     }
   };
 
@@ -36,6 +72,7 @@ export default function HomePage() {
         file={selectedFileContext?.selectedFile}
         onFileSave={handleFileSave}
         fileLoading={loading}
+        isFileChanged={isFileChanged}
       />
       <div className="HomePage">
         <div className="side-bar">
@@ -50,8 +87,9 @@ export default function HomePage() {
             defaultLanguage="javascript"
             language={language}
             defaultValue="// some comment"
-            value={fileData}
-            onChange={(value) => setFileData(value ?? "")}
+            value={editorData}
+            onChange={handleEditorChange}
+            options={{ readOnly: loading }}
           />
         </div>
       </div>

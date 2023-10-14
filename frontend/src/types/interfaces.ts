@@ -15,3 +15,8 @@ export interface SelectedFileContextType {
   selectedFile: FileObj | undefined;
   setSelectedFile: React.Dispatch<React.SetStateAction<FileObj | undefined>>;
 }
+
+export interface SelectedBucketContextType {
+  selectedBucket: string | undefined;
+  setSelectedBucket: React.Dispatch<React.SetStateAction<string | undefined>>;
+}
