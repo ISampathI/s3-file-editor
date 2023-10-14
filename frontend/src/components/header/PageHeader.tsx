@@ -4,9 +4,15 @@ import { FileObj } from "../../types/interfaces";
 
 interface PageHeaderProps {
   file?: FileObj;
+  onFileSave?: () => Promise<void>;
+  fileLoading?: boolean;
 }
 
-export default function PageHeader({ file }: PageHeaderProps) {
+export default function PageHeader({
+  file,
+  onFileSave,
+  fileLoading,
+}: PageHeaderProps) {
   const [showLogin, setShowLogin] = React.useState<boolean>(false);
 
   return (
@@ -27,7 +33,13 @@ export default function PageHeader({ file }: PageHeaderProps) {
         })}
       </div>
 
-      <button className="save-btn">Save</button>
+      <button
+        disabled={!file || fileLoading}
+        className={`save-btn ${fileLoading ? "loading" : ""}`}
+        onClick={onFileSave}
+      >
+        <i className="fa-solid fa-floppy-disk"></i>
+      </button>
       <div className="profile">
         <div
           onClick={() => {

@@ -10,17 +10,33 @@ import { SelectedFileContext } from "../../contexts/Context";
 export default function HomePage() {
   const [fileData, setFileData] = React.useState<string>("");
   const [language, setLanguage] = React.useState<string>("javascript");
+  const [loading, setLoading] = React.useState<boolean>(false);
+
   const selectedFileContext = React.useContext(SelectedFileContext);
 
   const handleFileClick = async (file: any) => {
+    setLoading(true);
     const data = await getS3File(file.key);
     setLanguage(getLanguageFromFilename(file.key));
     setFileData(data);
+    setLoading(false);
+  };
+
+  const handleFileSave = async () => {
+    if (selectedFileContext?.selectedFile) {
+      setLoading(true);
+      await updateS3File(selectedFileContext?.selectedFile.key, fileData);
+      setLoading(false);
+    }
   };
 
   return (
     <>
-      <PageHeader file={selectedFileContext?.selectedFile}/>
+      <PageHeader
+        file={selectedFileContext?.selectedFile}
+        onFileSave={handleFileSave}
+        fileLoading={loading}
+      />
       <div className="HomePage">
         <div className="side-bar">
           <FolderTree onFileSelect={handleFileClick} />

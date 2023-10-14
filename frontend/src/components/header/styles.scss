@@ -21,7 +21,6 @@
     width: 300px;
     border-right: 3px solid $primary-color;
 
-
     span {
       color: $primary-color;
       font-size: 1.3rem;
@@ -31,7 +30,7 @@
     }
   }
 
-  .file-path{
+  .file-path {
     height: 100%;
     font-size: 0.9rem;
     font-weight: 600;
@@ -41,7 +40,7 @@
     align-items: center;
     padding-left: 15px;
 
-    .separater{
+    .separater {
       color: $primary-color;
       font-weight: bolder;
       margin-inline: 3px;
@@ -50,17 +49,17 @@
 
   .save-btn {
     margin-left: auto;
-    background-color: $primary-color;
-    padding: 5px;
-    padding-inline: 20px;
-    border-radius: 0.5rem;
-    color: $text-color-dark;
-    display: none;
+    color: $primary-color;
+    font-size: 1.3rem;
+  }
+
+  .save-btn.loading {
+    color: $accent-color;
   }
 
   .profile {
     position: relative;
-    margin-left: auto;
+    margin-left: 20px;
 
     .login-form-show {
       display: flex !important;
