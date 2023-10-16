@@ -1,25 +1,26 @@
-import React from "react";
-import logo from "./logo.svg";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./App.scss";
-import FolderTree from "./components/folder-tree/FolderTree";
+import ContextProvider from "./components/context-provider/ContextProvider";
 import HomePage from "./pages/home/HomePage";
-import PageHeader from "./components/header/PageHeader";
-import { SelectedBucketContext, SelectedFileContext } from "./contexts/Context";
-import { FileObj } from "./types/interfaces";
+import LoginPage from "./pages/login/LoginPage";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <HomePage />,
+  },
+  {
+    path: "/login",
+    element: <LoginPage />,
+  },
+]);
 
 function App() {
-  const [selectedFile, setSelectedFile] = React.useState<FileObj>();
-  const [selectedBucket, setSelectedBucket] = React.useState<string>();
-
   return (
     <div className="App">
-      <SelectedBucketContext.Provider
-        value={{ selectedBucket, setSelectedBucket }}
-      >
-        <SelectedFileContext.Provider value={{ selectedFile, setSelectedFile }}>
-          <HomePage />
-        </SelectedFileContext.Provider>
-      </SelectedBucketContext.Provider>
+      <ContextProvider>
+        <RouterProvider router={router} />
+      </ContextProvider>
     </div>
   );
 }

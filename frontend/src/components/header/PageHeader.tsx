@@ -1,6 +1,16 @@
 import React from "react";
 import "./styles.scss";
 import { FileObj } from "../../types/interfaces";
+import {
+  Avatar,
+  Button,
+  Divider,
+  Dropdown,
+  Input,
+  MenuProps,
+  Space,
+} from "antd";
+import { UserOutlined } from "@ant-design/icons";
 
 interface PageHeaderProps {
   file?: FileObj;
@@ -79,9 +89,12 @@ export default function PageHeader({
             showLogin ? "login-form-show" : "login-form-hide"
           }`}
         >
-          <input type="text" placeholder="User Name" />
-          <input type="password" placeholder="Password" />
-          <button className="bg-black">LOGIN</button>
+          <Input placeholder="User Name"></Input>
+          <Input.Password
+            placeholder="Password"
+            visibilityToggle={false}
+          ></Input.Password>
+          <Button>Login</Button>
         </div>
       </div>
     </div>

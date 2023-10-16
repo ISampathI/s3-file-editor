@@ -34,7 +34,11 @@ export const updateS3File = async (
   bucket: string
 ) => {
   try {
-    const response = await api.post("/s3/update-file", { key, content, bucket });
+    const response = await api.post("/s3/update-file", {
+      key,
+      content,
+      bucket,
+    });
     return response;
   } catch (err) {
     console.log(err);
