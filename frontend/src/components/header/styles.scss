@@ -1,13 +1,11 @@
-@import "../../styles/variables.scss";
-
 .PageHeader {
   display: flex;
   width: 100%;
   height: 60px;
-  background-color: $sub-background-color;
+  background-color: var(--sub-background-color);
   align-items: center;
-  color: $accent-color-light;
-  border-bottom: 2px solid $border-color;
+  color: var(--accent-color-light);
+  border-bottom: 1px solid var(--border-color);
   z-index: 1000;
   padding-right: 20px;
 
@@ -19,10 +17,10 @@
     align-items: center;
     height: 100%;
     width: 300px;
-    border-right: 3px solid $primary-color;
+    border-right: 3px solid var(--primary-color);
 
     span {
-      color: $primary-color;
+      color: var(--primary-color);
       font-size: 1.3rem;
       font-weight: 700;
       margin-right: 5px;
@@ -35,13 +33,13 @@
     font-size: 0.9rem;
     font-weight: 600;
     margin-left: 20px;
-    color: $accent-color;
+    color: var(--accent-color);
     display: flex;
     align-items: center;
     padding-left: 15px;
 
     .separater {
-      color: $primary-color;
+      color: var(--primary-color);
       font-weight: bolder;
       margin-inline: 3px;
     }
@@ -49,24 +47,27 @@
 
   .loading-spin {
     svg {
-      fill: $primary-color;
+      fill: var(--primary-color);
       width: 1.3rem;
     }
   }
 
   .save-btn {
-    margin-left: 10px;
-    color: $primary-color;
+    margin-right: 10px;
+    color: var(--primary-color);
     font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  .save-btn.loading {
-    color: $accent-color;
-  }
+  // .save-btn.loading {
+  //   color: var(--accent-color);
+  // }
 
   .profile {
     position: relative;
-    margin-left: 20px;
+    margin-left: 10px;
 
     .login-form-show {
       display: flex !important;
@@ -85,9 +86,9 @@
       z-index: 1000;
       padding: 15px;
       width: 200px;
-      background-color: $sub-background-color-2;
+      background-color: var(--sub-background-color-2);
       border-radius: 2px;
-      border: 1px solid $sub-background-color-lighter;
+      border: 1px solid var(--sub-background-color-lighter);
       box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
       font-size: 0.9rem;
 
@@ -97,7 +98,7 @@
         top: -10px;
         width: 50px;
         height: 10px;
-        background-color: $sub-background-color-2;
+        background-color: var(--sub-background-color-2);
         position: absolute;
         clip-path: polygon(80% 0%, 0% 100%, 100% 100%);
       }
@@ -112,8 +113,8 @@
       }
 
       button {
-        background-color: $primary-color;
-        color: $text-color-dark;
+        background-color: var(--primary-color);
+        color: var(--text-color-dark);
         border-radius: 5px;
         padding: 5px;
         padding-inline: 20px;

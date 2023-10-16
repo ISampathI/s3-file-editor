@@ -11,6 +11,8 @@ import {
   Space,
 } from "antd";
 import { UserOutlined } from "@ant-design/icons";
+import { AuthService } from "../../services/auth";
+import { DarkModeContext } from "../../contexts/Context";
 
 interface PageHeaderProps {
   file?: FileObj;
@@ -25,6 +27,7 @@ export default function PageHeader({
   fileLoading,
   isFileChanged,
 }: PageHeaderProps) {
+  const darkmode = React.useContext(DarkModeContext);
   const [showLogin, setShowLogin] = React.useState<boolean>(false);
 
   return (
@@ -66,13 +69,27 @@ export default function PageHeader({
           <span className="sr-only">Loading...</span>
         </div>
       )}
-      <button
-        disabled={!file || fileLoading || !isFileChanged}
-        className={`save-btn ${fileLoading || !isFileChanged ? "loading" : ""}`}
+      <Button
+        type="link"
+        size="large"
+        disabled={!file || fileLoading}
+        className="save-btn"
         onClick={onFileSave}
       >
         <i className="fa-solid fa-floppy-disk"></i>
-      </button>
+      </Button>
+      <Button
+        shape="circle"
+        onClick={() => {
+          darkmode?.setDarkMode(!darkmode?.darkMode);
+        }}
+      >
+        {darkmode?.darkMode ? (
+          <i className="fa-solid fa-sun"></i>
+        ) : (
+          <i className="fa-solid fa-moon"></i>
+        )}
+      </Button>
       <div className="profile">
         <div
           onClick={() => {
@@ -81,7 +98,8 @@ export default function PageHeader({
           className="select-none cursor-pointer ml-5 relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600"
         >
           <span className="font-medium text-gray-600 dark:text-gray-300">
-            JL
+            {AuthService.getUser()?.username?.charAt(0).toUpperCase() +
+              AuthService.getUser()?.username?.charAt(1).toLowerCase()}
           </span>
         </div>
         <div

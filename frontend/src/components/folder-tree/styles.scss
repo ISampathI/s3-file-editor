@@ -1,9 +1,8 @@
-@import "../../styles/variables.scss";
 
 .FolderTree {
   width: fit-content;
   min-width: 100%;
-  color: $accent-color-light;
+  color: var(--accent-color-light);
   font-size: 0.85rem;
   padding-left: 5px;
   position: relative;
@@ -13,8 +12,8 @@
     padding-left: 7px;
     padding-bottom: 8px;
     padding-top: 10px;
-    background-color: $sub-background-color;
-    box-shadow: rgb(0, 0, 0) 0px 8px 4px -7px;
+    background-color: var(--sub-background-color);
+    box-shadow: rgb(0, 0, 0) 0px 8px 4px -10px;
     display: flex;
     align-items: center;
     position: sticky;
@@ -29,25 +28,25 @@
       .ant-select-selector {
         border: 0;
         width: 100%;
-        background-color: $sub-background-color;
+        background-color: var(--sub-background-color);
         cursor: pointer;
-        color: white;
+        color: var(--accent-color);
         font-size: 0.8rem;
 
         .ant-select-selection-placeholder {
-          color: $accent-color;
+          color: var(--accent-color);
         }
       }
       .ant-select-arrow{
         display: none;
         svg{
-          fill: $accent-color;
+          fill: var(--accent-color);
         }   
       }
     }
 
     i {
-      color: $text-color-2;
+      color: var(--text-color-2);
     }
   }
 
@@ -81,29 +80,13 @@
   }
 
   .file.active {
-    background-color: $background-color;
+    background-color: var(--background-color);
   }
 
   .folder.active {
     i {
-      color: $primary-color;
+      color: var(--primary-color);
     }
   }
 }
 
-.ant-select-dropdown {
-  background-color: $sub-background-color;
-  border-radius: 2px;
-  border: 1px solid $sub-background-color-lighter;
-
-  .ant-select-item-option-content {
-    color: white;
-  }
-  .ant-select-item-option-selected{
-    background-color: $sub-background-color-lighter !important;
-  }
-
-  .rc-virtual-list-scrollbar-thumb{
-    background-color: $sub-background-color-lighter !important;
-  }
-}

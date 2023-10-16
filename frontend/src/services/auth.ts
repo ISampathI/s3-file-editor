@@ -1,30 +1,40 @@
 import axios from "axios";
+import { Auth } from "../types/interfaces";
 
-class AuthService {
-  private static user: any;
-  private api: any;
+export class AuthService {
+  private static user: Auth | null = null;
+  private static api = axios.create({
+    baseURL: "http://localhost:4000",
+  });
 
-  constructor() {
-    this.api = axios.create({
-      baseURL: "http://localhost:4000",
-    });
-  }
-
-  public isLoggedIn(): boolean {
+  public static isAuthenticated(): boolean {
     return !!AuthService.user;
   }
 
-  public async login(username: string, password: string): Promise<any> {
-    const res = await this.api.post("/auth/login", { username, password });
-    if (res.data.user) {
-      AuthService.user = res.data.user;
-      return res.data.user;
-    } else {
-      return null;
-    }
+  public static getUser(): any {
+    return AuthService.user;
+  }
+  
+  public static async login(username: string, password: string): Promise<any> {
+    return await AuthService.api
+      .post("/auth/login", {
+        username,
+        password,
+      })
+      .then((res) => {
+        if (res.data.user) {
+          AuthService.user = res.data.user;
+          return res.data.user;
+        } else {
+          return null;
+        }
+      })
+      .catch((err) => {
+        return null;
+      });
   }
 
-  public logout(): void {
+  public static logout(): void {
     AuthService.user = null;
   }
 }

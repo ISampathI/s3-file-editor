@@ -32,3 +32,8 @@ export interface AuthContextType {
   auth: {} | undefined;
   setAuth: React.Dispatch<React.SetStateAction<Auth | undefined>>;
 }
+
+export interface DarkModeContextType {
+  darkMode: boolean | undefined;
+  setDarkMode: React.Dispatch<React.SetStateAction<boolean | undefined>>;
+}

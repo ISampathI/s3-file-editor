@@ -6,19 +6,30 @@ import { getS3File, updateS3File } from "../../services/api";
 import { getLanguageFromFilename } from "../../utils/editor";
 import PageHeader from "../../components/header/PageHeader";
 import {
+  DarkModeContext,
   SelectedBucketContext,
   SelectedFileContext,
 } from "../../contexts/Context";
+import { useNavigate } from "react-router-dom";
+import { AuthService } from "../../services/auth";
 
 export default function HomePage() {
+  const navigate = useNavigate();
   const selectedBucketContext = React.useContext(SelectedBucketContext);
   const selectedFileContext = React.useContext(SelectedFileContext);
+  const darkMode = React.useContext(DarkModeContext);
 
   const [fileData, setFileData] = React.useState<string>("");
   const [editorData, setEditorData] = React.useState<string>("");
   const [language, setLanguage] = React.useState<string>("javascript");
   const [loading, setLoading] = React.useState<boolean>(false);
   const [isFileChanged, setIsFileChanged] = React.useState<boolean>(false);
+
+  React.useEffect(() => {
+    if (!AuthService.isAuthenticated()) {
+      navigate("/login");
+    }
+  }, []);
 
   const handleFileClick = async (file: any) => {
     if (!file || !selectedBucketContext?.selectedBucket) return;
@@ -83,7 +94,7 @@ export default function HomePage() {
             className="editor"
             height="100%"
             width="100%"
-            theme="vs-dark"
+            theme={darkMode?.darkMode ? "vs-dark" : "vs-light"}
             defaultLanguage="javascript"
             language={language}
             defaultValue="// some comment"
