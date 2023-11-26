@@ -12,6 +12,7 @@ import {
 } from "../../contexts/Context";
 import { useNavigate } from "react-router-dom";
 import { AuthService } from "../../services/auth";
+import EnvEditor from "../../components/env-editor/EnvEditor";
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -102,6 +103,11 @@ export default function HomePage() {
             onChange={handleEditorChange}
             options={{ readOnly: loading }}
           />
+          {/* {selectedFileContext?.selectedFile?.key.endsWith(".env") && (
+            <div className="env-editor">
+              <EnvEditor fileData={editorData} />
+            </div>
+          )} */}
         </div>
       </div>
     </>

@@ -7,8 +7,6 @@ export class AuthService {
 
   async login(username: string, password: string) {
     const user = await this.userService.getUser(username, password);
-    console.log(user, username, password);
-
     if (!user) {
       throw new UnauthorizedException('Invalid credentials');
     } else {

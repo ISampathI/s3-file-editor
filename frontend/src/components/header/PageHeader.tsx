@@ -13,6 +13,7 @@ import {
 import { UserOutlined } from "@ant-design/icons";
 import { AuthService } from "../../services/auth";
 import { DarkModeContext } from "../../contexts/Context";
+import { Link } from "react-router-dom";
 
 interface PageHeaderProps {
   file?: FileObj;
@@ -20,6 +21,24 @@ interface PageHeaderProps {
   fileLoading?: boolean;
   isFileChanged?: boolean;
 }
+
+const items: MenuProps["items"] = [
+  // {
+  //   label: <span>Hello {AuthService.getUser()?.username}</span>,
+  //   key: "0",
+  // },
+  // {
+  //   type: "divider",
+  // },
+  // {
+  //   label: (
+  //     <Link to="/login">
+  //       <Button type="link">Logout</Button>
+  //     </Link>
+  //   ),
+  //   key: "1",
+  // },
+];
 
 export default function PageHeader({
   file,
@@ -90,7 +109,12 @@ export default function PageHeader({
           <i className="fa-solid fa-moon"></i>
         )}
       </Button>
-      <div className="profile">
+      <Dropdown menu={{ items }}>
+        <Avatar className="profile" style={{ marginLeft: "40px" }}>
+          {AuthService.getUser()?.username?.charAt(0).toUpperCase()}
+        </Avatar>
+      </Dropdown>
+      {/* <div className="profile">
         <div
           onClick={() => {
             setShowLogin(!showLogin);
@@ -114,7 +138,7 @@ export default function PageHeader({
           ></Input.Password>
           <Button>Login</Button>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

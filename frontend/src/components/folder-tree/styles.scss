@@ -32,10 +32,6 @@
         cursor: pointer;
         color: var(--accent-color);
         font-size: 0.8rem;
-
-        .ant-select-selection-placeholder {
-          color: var(--accent-color);
-        }
       }
       .ant-select-arrow{
         display: none;
@@ -80,7 +76,7 @@
   }
 
   .file.active {
-    background-color: var(--background-color);
+    background-color: var(--selected-color);
   }
 
   .folder.active {
