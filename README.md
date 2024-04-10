@@ -14,10 +14,10 @@ This project aims to provide a user-friendly interface for editing files stored 
 - **Backend**: NestJS
 - **AWS SDK**: Integration with AWS services
 
-![ScreenShot](/screenshots/s1.png)
-![ScreenShot](/screenshots/s2.png)
-![ScreenShot](/screenshots/s3.png)
-![ScreenShot](/screenshots/s4.png)
+![ScreenShot](/screenshots/s1.PNG)
+![ScreenShot](/screenshots/s2.PNG)
+![ScreenShot](/screenshots/s3.PNG)
+![ScreenShot](/screenshots/s4.PNG)
 
 ## Getting Started
 
@@ -49,10 +49,10 @@ AWS_ACCESS_KEY_ID = your_access_key_id
 AWS_SECRET_ACCESS_KEY = your_secret_access_key
 AWS_REGION = us-east-1
 AWS_BUCKET_NAME = your_bucket_name`
+```
 
 5. Run the frontend and backend:
 
-```
 # Start the frontend
 npm run start
 
