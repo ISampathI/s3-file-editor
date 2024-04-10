@@ -52,11 +52,7 @@ AWS_BUCKET_NAME = your_bucket_name`
 ```
 
 5. Run the frontend and backend:
-
-# Start the frontend
-npm run start
-
-# Start the backend
+```
 npm run start
 ```
 
